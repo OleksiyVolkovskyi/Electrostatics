@@ -16,6 +16,7 @@ class testCharge{
   }
   void update(){
     location.add(velocity);
+    noStroke();
     fill(0,0,200);
     ellipse(location.x, location.y , r, r);
   }
@@ -46,6 +47,7 @@ class sourceCharge{
 
   void update(){
     fill(200,0,0);
+    noStroke();
     ellipse(location.x,location.y,r,r);
   }
 }
@@ -56,6 +58,7 @@ void drawArrow(float cx, float cy, float fx, float fy){
   pushMatrix();
   translate(cx, cy);
   rotate(angle);
+  stroke(255,255,255);
   line(0,0,len, 0);
   line(len, 0, len - 8, -8);
   line(len, 0, len - 8, 8);
@@ -79,13 +82,13 @@ void setup() {  // this is run once.
     // set the width of the line. 
     strokeWeight(3);
     
-    sourceCharges.add(new sourceCharge(320,350,10,-5));
+    sourceCharges.add(new sourceCharge(320,350,15,-5));
 } 
 //testCharge (float ix, float iy, int ir, float iq)
 //sourceCharge (float ix,float iy,float ir,float iq)
 
 void draw() {  // this is run repeatedly.  
-  background(255);
+  background(0);
   
   if (placing){
     drawArrow(oldPos.x, oldPos.y, mouseX, mouseY);
@@ -112,12 +115,12 @@ void keyPressed(){
           oldPos = new PVector(mouseX,mouseY);
         }
         else{
-          testCharges.add(new testCharge(mouseX, mouseY,10,5, oldPos.sub(new PVector(mouseX, mouseY)).mult(-0.01)));
+          testCharges.add(new testCharge(mouseX, mouseY,15,5, oldPos.sub(new PVector(mouseX, mouseY)).mult(-0.01)));
         }
         
           
     }
     if (key == 's'){
-        sourceCharges.add(new sourceCharge(mouseX, mouseY,10,-5));
+        sourceCharges.add(new sourceCharge(mouseX, mouseY,15,-5));
     }
 }
