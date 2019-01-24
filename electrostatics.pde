@@ -1,5 +1,6 @@
 ArrayList<testCharge> testCharges = new ArrayList<testCharge>();
 ArrayList<sourceCharge> sourceCharges = new ArrayList<sourceCharge>();
+boolean placing = false;
 
 class testCharge{
   PVector location; //float xpos, ypos;
@@ -7,11 +8,10 @@ class testCharge{
   int r;
   float q;
 
-  testCharge (float ix, float iy, int ir, float iq){
+  testCharge (float ix, float iy, int ir, float iq, PVector iv){
     q = iq;
     location = new PVector(ix,iy);
-    //velocity = new PVector(pmouseX, pmouseY).sub(new PVector(mouseX, mouseY)).mult(30);
-    velocity = new PVector();
+    velocity = iv;
     r = ir;
   }
   void update(){
@@ -50,11 +50,22 @@ class sourceCharge{
   }
 }
 
+void drawArrow(float cx, float cy, float fx, float fy){
+  float len = (float) Math.sqrt((fx-cx)*(fx-cx)+(fy-cy)*(fy-cy));
+  float angle = -atan2(cx-fx,cy-fy)-PI/2;
+  pushMatrix();
+  translate(cx, cy);
+  rotate(angle);
+  line(0,0,len, 0);
+  line(len, 0, len - 8, -8);
+  line(len, 0, len - 8, 8);
+  popMatrix();
+}
 
 void setup() {  // this is run once.   
 
     // set the background color
-    background(0);
+    background(255);
 
     // canvas size (Integers only, please.)
     size(750,750); 
@@ -74,7 +85,12 @@ void setup() {  // this is run once.
 //sourceCharge (float ix,float iy,float ir,float iq)
 
 void draw() {  // this is run repeatedly.  
-  background(0);
+  background(255);
+  
+  if (placing){
+    drawArrow(oldPos.x, oldPos.y, mouseX, mouseY);
+  }
+  
   for (int i = 0; i<testCharges.size(); i++){
     for (int j = 0; j<testCharges.size(); j++){
       if (i!=j)
@@ -88,11 +104,20 @@ void draw() {  // this is run repeatedly.
         q.update();
 }
 
+PVector oldPos;
 void keyPressed(){
     if (key == ' '){
-        testCharges.add(new testCharge(mouseX, mouseY,10,5));
+        placing = !placing;
+        if (placing){
+          oldPos = new PVector(mouseX,mouseY);
+        }
+        else{
+          testCharges.add(new testCharge(mouseX, mouseY,10,5, oldPos.sub(new PVector(mouseX, mouseY)).mult(-0.01)));
+        }
+        
+          
     }
     if (key == 's'){
-        sourceCharges.add(new sourceCharge(mouseX, mouseY,10,5));
+        sourceCharges.add(new sourceCharge(mouseX, mouseY,10,-5));
     }
 }
