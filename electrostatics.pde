@@ -19,6 +19,7 @@ class testCharge{
     noStroke();
     fill(0,0,200);
     ellipse(location.x, location.y , r, r);
+    drawArrow(location.x, location.y, location.x+velocity.x*30, location.y+velocity.y*30, 5);
   }
 
   void force(sourceCharge c){
@@ -52,23 +53,23 @@ class sourceCharge{
   }
 }
 
-void drawArrow(float cx, float cy, float fx, float fy){
+void drawArrow(float cx, float cy, float fx, float fy, int size){
   float len = (float) Math.sqrt((fx-cx)*(fx-cx)+(fy-cy)*(fy-cy));
   float angle = -atan2(cx-fx,cy-fy)-PI/2;
   pushMatrix();
   translate(cx, cy);
   rotate(angle);
-  stroke(255,255,255);
+  stroke(255);
   line(0,0,len, 0);
-  line(len, 0, len - 8, -8);
-  line(len, 0, len - 8, 8);
+  line(len, 0, len - size, -size);
+  line(len, 0, len - size, size);
   popMatrix();
 }
 
 void setup() {  // this is run once.   
 
     // set the background color
-    background(255);
+    background(0);
 
     // canvas size (Integers only, please.)
     size(750,750); 
@@ -91,7 +92,7 @@ void draw() {  // this is run repeatedly.
   background(0);
   
   if (placing){
-    drawArrow(oldPos.x, oldPos.y, mouseX, mouseY);
+    drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10);
   }
   
   for (int i = 0; i<testCharges.size(); i++){
