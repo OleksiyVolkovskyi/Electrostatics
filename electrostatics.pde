@@ -1,5 +1,6 @@
 ArrayList<testCharge> testCharges = new ArrayList<testCharge>();
 ArrayList<sourceCharge> sourceCharges = new ArrayList<sourceCharge>();
+ArrayList<electricField> electricFields = new ArrayList<electricField>();
 boolean placing = false;
 
 class testCharge{
@@ -31,6 +32,38 @@ class testCharge{
   void force(testCharge t){
     float d = max(pow(pow(location.x-t.location.x,2)+pow(location.y-t.location.y,2),0.5),1);
     velocity.add(new PVector(q*t.q*(location.x-t.location.x)/pow(d,3),q*t.q*(location.y-t.location.y)/pow(d,3)));
+  }
+
+}
+
+class electricField{
+  PVector location; //float xpos, ypos;
+  PVector direction; //float vx, vy;
+  int r;
+  float q;
+
+  electricField (float ix, float iy, int ir, float iq){
+    q = iq;
+    location = new PVector(ix,iy);
+    direction = new PVector(0,0);
+    r = ir;
+  }
+  void update(){
+    noStroke();
+    drawArrow(location.x, location.y, location.x+direction.x*30, location.y+direction.y*30, 5);
+    direction.x = 0;
+    direction.y = 0;
+  }
+
+  void force(sourceCharge c){
+    float d = max(pow(pow(location.x-c.location.x,2)+pow(location.y-c.location.y,2),0.5),10);
+    direction.x += q*c.q*(location.x-c.location.x)/pow(d,3);
+    direction.y += q*c.q*(location.y-c.location.y)/pow(d,3);
+  }
+  
+  void force(testCharge t){
+    float d = max(pow(pow(location.x-t.location.x,2)+pow(location.y-t.location.y,2),0.5),1);
+    direction.add(new PVector(q*t.q*(location.x-t.location.x)/pow(d,3),q*t.q*(location.y-t.location.y)/pow(d,3)));
   }
 
 }
@@ -83,7 +116,9 @@ void setup() {  // this is run once.
     // set the width of the line. 
     strokeWeight(3);
     
-    sourceCharges.add(new sourceCharge(320,350,15,-5));
+    electricFields.add(new electricField(320,350,15,-5));
+    
+    //sourceCharges.add(new sourceCharge(320,350,15,-5));
 } 
 //testCharge (float ix, float iy, int ir, float iq)
 //sourceCharge (float ix,float iy,float ir,float iq)
@@ -94,18 +129,24 @@ void draw() {  // this is run repeatedly.
   if (placing){
     drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10);
   }
-  
+  //Test charges with each other
   for (int i = 0; i<testCharges.size(); i++){
     for (int j = 0; j<testCharges.size(); j++){
       if (i!=j)
         testCharges.get(i).force(testCharges.get(j));
-      for (sourceCharge q : sourceCharges)
-        testCharges.get(i).force(q);
-      testCharges.get(i).update();
     }
   }
+  //Test with source
+  for (int i = 0; i<testCharges.size(); i++){
+    for (sourceCharge q : sourceCharges)
+         testCharges.get(i).force(q);
+    testCharges.get(i).update();
+  }
+  //Electric Field with Test
   for (sourceCharge q : sourceCharges)
         q.update();
+        
+  //Electric Field with Source
 }
 
 PVector oldPos;
