@@ -50,7 +50,8 @@ class electricField{
   }
   void update(){
     noStroke();
-    drawArrow(location.x, location.y, location.x+direction.x*30, location.y+direction.y*30, 5);
+    if(direction.mag()!=0)
+    drawArrow(location.x, location.y, location.x+direction.x*1000, location.y+direction.y*1000, 5);
     direction.x = 0;
     direction.y = 0;
   }
@@ -116,8 +117,11 @@ void setup() {  // this is run once.
     // set the width of the line. 
     strokeWeight(3);
     
-    electricFields.add(new electricField(320,350,15,-5));
-    
+    for (int i = 50; i<750; i += 50){
+        for (int j = 50; j< 750; j+=50){
+            electricFields.add(new electricField(i,j,15,-50));
+        }
+    }
     //sourceCharges.add(new sourceCharge(320,350,15,-5));
 } 
 //testCharge (float ix, float iy, int ir, float iq)
