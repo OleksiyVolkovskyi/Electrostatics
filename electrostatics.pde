@@ -129,6 +129,7 @@ void draw() {  // this is run repeatedly.
   if (placing){
     drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10);
   }
+  
   //Test charges with each other
   for (int i = 0; i<testCharges.size(); i++){
     for (int j = 0; j<testCharges.size(); j++){
@@ -136,17 +137,32 @@ void draw() {  // this is run repeatedly.
         testCharges.get(i).force(testCharges.get(j));
     }
   }
+  
   //Test with source
   for (int i = 0; i<testCharges.size(); i++){
     for (sourceCharge q : sourceCharges)
          testCharges.get(i).force(q);
-    testCharges.get(i).update();
   }
+  
   //Electric Field with Test
-  for (sourceCharge q : sourceCharges)
-        q.update();
+  for (testCharge t : testCharges){
+    for (electricField e : electricFields)
+         e.force(t);
+  }
         
   //Electric Field with Source
+  for (sourceCharge c : sourceCharges){
+    for (electricField e : electricFields)
+         e.force(c);
+  }
+  
+  //Update Everything
+  for (electricField e : electricFields)
+        e.update();
+  for (sourceCharge q : sourceCharges)
+        q.update();
+  for (testCharge t : testCharges)
+        t.update();
 }
 
 PVector oldPos;
