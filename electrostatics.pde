@@ -3,6 +3,10 @@ ArrayList<sourceCharge> sourceCharges = new ArrayList<sourceCharge>();
 ArrayList<electricField> electricFields = new ArrayList<electricField>();
 boolean placing = false;
 
+float sigmoid(float x){
+  return 2*(1.0/(1+pow(1.1,-x)))-1;
+}
+
 class testCharge{
   PVector location; //float xpos, ypos;
   PVector velocity; //float vx, vy;
@@ -20,7 +24,7 @@ class testCharge{
     noStroke();
     fill(0,0,200);
     ellipse(location.x, location.y , r, r);
-    drawArrow(location.x, location.y, location.x+velocity.x*30, location.y+velocity.y*30, 5);
+    drawArrow(location.x, location.y, location.x+velocity.x*30, location.y+velocity.y*30, 5, 1);
   }
 
   void force(sourceCharge c){
@@ -50,8 +54,10 @@ class electricField{
   }
   void update(){
     noStroke();
-    if(direction.mag()!=0)
-    drawArrow(location.x, location.y, location.x+direction.x*1000, location.y+direction.y*1000, 5);
+    if(direction.mag()!=0){
+      direction.mult(sigmoid(direction.mag()*50)/direction.mag());
+      drawArrow(location.x, location.y, location.x+direction.x*40, location.y+direction.y*40, 5, sigmoid(direction.mag()*50));
+    }
     direction.x = 0;
     direction.y = 0;
   }
@@ -87,16 +93,16 @@ class sourceCharge{
   }
 }
 
-void drawArrow(float cx, float cy, float fx, float fy, int size){
+void drawArrow(float cx, float cy, float fx, float fy, int size, float trans){
   float len = (float) Math.sqrt((fx-cx)*(fx-cx)+(fy-cy)*(fy-cy));
   float angle = -atan2(cx-fx,cy-fy)-PI/2;
   pushMatrix();
   translate(cx, cy);
   rotate(angle);
-  stroke(255);
+  stroke(255, 255, 255, 255*trans);
   line(0,0,len, 0);
-  line(len, 0, len - size, -size);
-  line(len, 0, len - size, size);
+  line(len-1.5, -1.5, len - size, -size);
+  line(len-1.5, 1.5, len - size, size);
   popMatrix();
 }
 
@@ -131,7 +137,7 @@ void draw() {  // this is run repeatedly.
   background(0);
   
   if (placing){
-    drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10);
+    drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10, 1);
   }
   
   //Test charges with each other
@@ -183,6 +189,6 @@ void keyPressed(){
           
     }
     if (key == 's'){
-        sourceCharges.add(new sourceCharge(mouseX, mouseY,15,-5));
+        sourceCharges.add(new sourceCharge(mouseX, mouseY,15,-50));
     }
 }
