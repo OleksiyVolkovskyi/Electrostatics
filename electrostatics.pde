@@ -2,6 +2,7 @@ ArrayList<testCharge> testCharges = new ArrayList<testCharge>();
 ArrayList<sourceCharge> sourceCharges = new ArrayList<sourceCharge>();
 ArrayList<electricField> electricFields = new ArrayList<electricField>();
 boolean placing = false;
+boolean paused = false;
 
 float sigmoid(float x){
   return 2*(1.0/(1+pow(1.1,-x)))-1;
@@ -134,8 +135,10 @@ void setup() {  // this is run once.
 //sourceCharge (float ix,float iy,float ir,float iq)
 
 void draw() {  // this is run repeatedly.  
+  if (paused){
+    return;  
+  }
   background(0);
-  
   if (placing){
     drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10, 1);
   }
@@ -190,5 +193,8 @@ void keyPressed(){
     }
     if (key == 's'){
         sourceCharges.add(new sourceCharge(mouseX, mouseY,15,-50));
+    }
+    if (key == 'p'){
+        paused = !paused;
     }
 }
