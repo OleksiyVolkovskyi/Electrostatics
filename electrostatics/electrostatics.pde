@@ -47,6 +47,7 @@ class electricField{
   int r;
   float q;
 
+
   electricField (float ix, float iy, int ir, float iq){
     q = iq;
     location = new PVector(ix,iy);
@@ -115,7 +116,7 @@ void setup() {  // this is run once.
     background(0);
 
     // canvas size (Integers only, please.)
-    size(750,750); 
+    size(1000,900); 
 
     // smooth edges
     smooth();
@@ -126,8 +127,8 @@ void setup() {  // this is run once.
     // set the width of the line. 
     strokeWeight(3);
     
-    for (int i = 50; i<750; i += 50){
-        for (int j = 50; j< 750; j+=50){
+    for (int i = 50; i<1000; i += 50){
+        for (int j = 50; j< 1000; j+=50){
             electricFields.add(new electricField(i,j,15,-50));
         }
     }
