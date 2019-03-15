@@ -1,4 +1,4 @@
-public class Button{
+class Button{
     float[] pos = new float[4];
     int[] activeColor = new int[4];
     int[] passiveColor = new int[4];
