@@ -66,7 +66,7 @@ void draw() {  // this is run repeatedly.
         q.update();
   for (testCharge t : testCharges)
         t.update();
-  b.update();
+  //b.update();
 }
 
 PVector oldPos;
