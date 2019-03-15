@@ -4,7 +4,7 @@ ArrayList<electricField> electricFields = new ArrayList<electricField>();
 boolean placing = false;
 boolean paused = false;
 
-b = new Button(new float[] {50,50,100,100}, new int[] {100,100,100,100},new int[] {200,200,200,200});
+//b = new Button(new float[] {50,50,100,100}, new int[] {100,100,100,100},new int[] {200,200,200,200});
 
 void setup() {  // this is run once.   
     // set the background color
