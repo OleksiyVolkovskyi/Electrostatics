@@ -4,7 +4,10 @@ ArrayList<electricField> electricFields = new ArrayList<electricField>();
 boolean placing = false;
 boolean paused = false;
 
-//b = new Button(new float[] {50,50,100,100}, new int[] {100,100,100,100},new int[] {200,200,200,200});
+ArrayList<Button> buttons = new ArrayList<Button>();
+
+Method circle = new Circle();
+
 
 void setup() {  // this is run once.   
     // set the background color
@@ -22,6 +25,8 @@ void setup() {  // this is run once.
             electricFields.add(new electricField(i,j,15,-50));
         }
     }
+    
+    buttons.add(new Button(new float[] {50,50,100,100}, new int[] {100,100,100,100},new int[] {200,200,200,200}, circle));
 } 
 
 void draw() {  // this is run repeatedly.  
@@ -66,7 +71,9 @@ void draw() {  // this is run repeatedly.
         q.update();
   for (testCharge t : testCharges)
         t.update();
-  //b.update();
+  for (Button b: buttons){
+      b.update();
+  }
 }
 
 PVector oldPos;
@@ -88,4 +95,9 @@ void keyPressed(){
     if (key == 'p'){
         paused = !paused;
     }
+}
+void mouseReleased(){
+  for (Button b: buttons){
+    b.clicked();
+  }
 }

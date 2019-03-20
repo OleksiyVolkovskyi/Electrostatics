@@ -2,8 +2,10 @@ class Button{
     float[] pos = new float[4];
     int[] activeColor = new int[4];
     int[] passiveColor = new int[4];
+    Method function;
     
-    Button(float[] p, int[] ac, int[] pc){
+    Button(float[] p, int[] ac, int[] pc, Method f){
+      function = f;
       pos = p;
       activeColor = ac;
       passiveColor = pc;
@@ -29,8 +31,16 @@ class Button{
       }
     }
     
+    private void clicked(){
+      if (inBound()){
+        function.activate();
+      }
+    }
+    
     
     void update(){
       drawButton();
+      
+      
     }
 }
