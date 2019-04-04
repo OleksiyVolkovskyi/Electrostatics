@@ -1,29 +1,52 @@
-ArrayList<testCharge> testCharges = new ArrayList<testCharge>();
-ArrayList<sourceCharge> sourceCharges = new ArrayList<sourceCharge>();
-ArrayList<electricField> electricFields = new ArrayList<electricField>();
+ArrayList<testCharge> testCharges;
+ArrayList<sourceCharge> sourceCharges;
+ArrayList<electricField> electricFields;
 boolean placing = false;
 boolean paused = false;
-String stage;
 PVector oldPos;
-boolean init = true;
+
+String[] settings = new String[2];
 
 ArrayList<Button> buttons = new ArrayList<Button>();
 
 Method circle = new Circle();
-Method streaks = new Streaks(sourceCharges);
+Method startMainGame = new MainGame(settings);
+Method backToIntro = new BackToIntro(settings);
+
+void setup() {  // this is run once.   
+    // set the background color
+    background(0);
+    // canvas size (Integers only, please.)
+    size(1000,900); 
+    // smooth edges
+    smooth();
+    // limit the number of frames per second
+    frameRate(60);
+    // set the width of the line. 
+    strokeWeight(3);
+
+    PFont font = createFont("zorque.ttf", 128, true);
+    textFont(font);
+    
+    settings[0] = "intro";
+    settings[1] = "true";
+    
+    //buttons.add(new Button(new float[] {50,30,150,100}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Start", 24, circle));
+    //buttons.add(new Button(new float[] {400,450,500,500}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Streaks", 24, streaks));
+}
 
 void drawIntro(){
-  if (init){
+  if (settings[1].equals("true")){
     background(0);
     fill(255,255,255);
     textAlign(CENTER, CENTER);
     textSize(80);
     text("Electrostatics Hockey", 160, 70, 680, 300);
     buttons = new ArrayList<Button>();
-    buttons.add(new Button(new float[] {350,400,650,490}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Start Game", 32, circle));
+    buttons.add(new Button(new float[] {350,400,650,490}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Start Game", 32, startMainGame));
     buttons.add(new Button(new float[] {350,500,650,590}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Level Select", 32, circle));
     buttons.add(new Button(new float[] {350,600,650,690}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Instructions", 32, circle));
-    init = false;
+    settings[1] = "false";
   }
   for (Button b: buttons){
       b.update();
@@ -35,6 +58,19 @@ void drawLvlSelect(){
 }
 
 void drawMainGame(){
+  if (settings[1].equals("true")){
+    testCharges = new ArrayList<testCharge>();
+    sourceCharges = new ArrayList<sourceCharge>();
+    electricFields = new ArrayList<electricField>();
+    for (int i = 50; i<1000; i += 50){
+        for (int j = 50; j< 1000; j+=50){
+            electricFields.add(new electricField(i,j,15,-50));
+        }
+    }
+    buttons = new ArrayList<Button>();
+    buttons.add(new Button(new float[] {870,695,980,740}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Back", 32, backToIntro));
+    settings[1] = "false";
+  }
   if (paused){
     return;  
   }
@@ -85,50 +121,25 @@ void drawInstruction(){
  
 }
 
-void setup() {  // this is run once.   
-    // set the background color
-    background(0);
-    // canvas size (Integers only, please.)
-    size(1000,900); 
-    // smooth edges
-    smooth();
-    // limit the number of frames per second
-    frameRate(60);
-    // set the width of the line. 
-    strokeWeight(3);
-    for (int i = 50; i<1000; i += 50){
-        for (int j = 50; j< 1000; j+=50){
-            electricFields.add(new electricField(i,j,15,-50));
-        }
-    }
-    PFont font = createFont("zorque.ttf", 128, true);
-    textFont(font);
-    
-    stage = "intro";
-    
-    //buttons.add(new Button(new float[] {50,30,150,100}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Start", 24, circle));
-    //buttons.add(new Button(new float[] {400,450,500,500}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Streaks", 24, streaks));
-} 
 
 void draw() {  // this is run repeatedly.
-  if (stage.equals("intro")){
+  if (settings[0].equals("intro")){
     drawIntro();
   }
-  else if (stage.equals("lvlselect")){
+  else if (settings[0].equals("lvlselect")){
     drawLvlSelect();
   }
-  else if (stage.equals("main")){
+  else if (settings[0].equals("main")){
     drawMainGame();
   }
-  else if (stage.equals("instruction")){
+  else if (settings[0].equals("instruction")){
     drawInstruction();
   }
   
 }
 
-
 void keyPressed(){
-  if (stage.equals("intro")){
+  if (settings[0].equals("main")){
     if (key == ' '){
         placing = !placing;
         if (placing){
@@ -136,9 +147,7 @@ void keyPressed(){
         }
         else{
           testCharges.add(new testCharge(mouseX, mouseY,15,5, new PVector(  -0.01*(oldPos.x-mouseX), -0.01*(oldPos.y-mouseY)  )));
-        }
-        
-          
+        } 
     }
     if (key == 's'){
         sourceCharges.add(new sourceCharge(mouseX, mouseY,15,-50));
