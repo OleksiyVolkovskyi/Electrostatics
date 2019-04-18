@@ -5,19 +5,20 @@ boolean placing = false;
 boolean paused = false;
 PVector oldPos;
 
-String[] settings = new String[2];
+String[] settings = new String[3];
 
 ArrayList<Button> buttons = new ArrayList<Button>();
 
 Method circle = new Circle();
 Method startMainGame = new MainGame(settings);
 Method backToIntro = new BackToIntro(settings);
+Method lvlSelectScreen = new LvlSelectScreen(settings);
 
 void setup() {  // this is run once.   
     // set the background color
     background(0);
     // canvas size (Integers only, please.)
-    size(1000,900); 
+    size(1000,800); 
     // smooth edges
     smooth();
     // limit the number of frames per second
@@ -44,7 +45,7 @@ void drawIntro(){
     text("Electrostatics Hockey", 160, 70, 680, 300);
     buttons = new ArrayList<Button>();
     buttons.add(new Button(new float[] {350,400,650,490}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Start Game", 32, startMainGame));
-    buttons.add(new Button(new float[] {350,500,650,590}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Level Select", 32, circle));
+    buttons.add(new Button(new float[] {350,500,650,590}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Level Select", 32, lvlSelectScreen));
     buttons.add(new Button(new float[] {350,600,650,690}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Instructions", 32, circle));
     settings[1] = "false";
   }
@@ -54,7 +55,29 @@ void drawIntro(){
 }
 
 void drawLvlSelect(){
- 
+   if (settings[1].equals("true")){
+    background(0);
+    fill(255,255,255);
+    textAlign(CENTER, CENTER);
+    textSize(80);
+    text("Select Level", 160, 10, 680, 100);
+    buttons = new ArrayList<Button>();
+    buttons.add(new Button(new float[] {870,695,980,740}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Back", 32, backToIntro));
+    
+    int index = 1;
+    int h = height - 20;
+    
+    for (int y = h/6; y<h-h/6-1; y+=h/6){
+      for (int x = width/8; x<width-width/8; x+=width/8){
+        buttons.add(new Button(new float[] {x+5,20+y+5,x+width/8-5,20+y+h/6-5}, new int[] {100,100,100,100},new int[] {200,200,200,200}, Integer.toString(index), 32, backToIntro));
+        index++;
+      }
+    }
+    settings[1] = "false";
+  }
+  for (Button b: buttons){
+      b.update();
+  }
 }
 
 void drawMainGame(){
@@ -118,7 +141,7 @@ void drawMainGame(){
 }
 
 void drawInstruction(){
- 
+
 }
 
 
