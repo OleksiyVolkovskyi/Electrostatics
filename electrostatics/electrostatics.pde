@@ -5,6 +5,7 @@ boolean placing = false;
 boolean paused = false;
 PVector oldPos;
 Level level;
+int deathCount;
 
 String[] settings = new String[3];
 
@@ -144,6 +145,14 @@ void drawMainGame(){
       b.update();
   }
   level.update();
+  
+  float x = testCharges.get(0).location.x;
+  float y = testCharges.get(0).location.y;
+  for(int i = 0; i<numObstacles; i++){
+    if (x>=objects.get(4*i)&&y>=objects.get(4*i+1)&&x<=objects.get(4*i+2)&&y<=objects.get(4*i+3)){
+        deathCount++;
+    }
+  }
 }
 
 void drawInstruction(){
