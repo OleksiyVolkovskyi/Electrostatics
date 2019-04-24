@@ -4,6 +4,7 @@ ArrayList<electricField> electricFields;
 boolean placing = false;
 boolean paused = false;
 PVector oldPos;
+Level level;
 
 String[] settings = new String[3];
 
@@ -95,6 +96,8 @@ void drawMainGame(){
     buttons = new ArrayList<Button>();
     buttons.add(new Button(new float[] {870,695,980,740}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Back", 32, backToIntro));
     settings[1] = "false";
+    level = new Level(settings[2]);
+    level.load();
   }
   if (paused){
     return;  
@@ -140,6 +143,7 @@ void drawMainGame(){
   for (Button b: buttons){
       b.update();
   }
+  level.update();
 }
 
 void drawInstruction(){
