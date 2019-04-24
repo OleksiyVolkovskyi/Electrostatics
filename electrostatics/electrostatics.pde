@@ -69,7 +69,8 @@ void drawLvlSelect(){
     
     for (int y = h/6; y<h-h/6-1; y+=h/6){
       for (int x = width/8; x<width-width/8; x+=width/8){
-        buttons.add(new Button(new float[] {x+5,20+y+5,x+width/8-5,20+y+h/6-5}, new int[] {100,100,100,100},new int[] {200,200,200,200}, Integer.toString(index), 32, backToIntro));
+        buttons.add(new Button(new float[] {x+5,20+y+5,x+width/8-5,20+y+h/6-5}, new int[] {100,100,100,100},new int[] {200,200,200,200}, Integer.toString(index), 32, 
+            new LvlSelect(settings, index)));
         index++;
       }
     }

@@ -1,5 +1,5 @@
 public class Circle implements Method{
   public void activate(){
-    ellipse(100,100,10,10);
+    ellipse(100,100,50,50);
   }
 }

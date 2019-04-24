@@ -1,0 +1,8 @@
+3 Obstacle Count
+100 100 800 200 Obstacle
+600 100 800 800 Obstacle
+100 600 800 800 Obstacle
+400 400 500 500 Goal
+300 300 Start
+0 100 Vector
+
