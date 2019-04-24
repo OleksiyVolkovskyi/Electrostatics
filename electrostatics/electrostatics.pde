@@ -83,6 +83,7 @@ void drawLvlSelect(){
 
 void drawMainGame(){
   if (settings[1].equals("true")){
+    placing = false;
     testCharges = new ArrayList<testCharge>();
     sourceCharges = new ArrayList<sourceCharge>();
     electricFields = new ArrayList<electricField>();
