@@ -1,6 +1,7 @@
 public class Level{
   String name;
   ArrayList<Integer> objects;
+  int numObstacles;
   
   public Level(String n){
     name = n;
@@ -8,7 +9,7 @@ public class Level{
   }
   public void load() throws IOException{
     BufferedReader input = createReader(name+".txt"); 
-    int numObstacles = Integer.valueOf(input.readLine());
+    numObstacles = Integer.valueOf(input.readLine());
     for (int i = 0; i<numObstacles; i++){
       String line = input.readLine();
       objects.add(Integer.valueOf(line.split(" ")[0]));
@@ -29,8 +30,10 @@ public class Level{
     objects.add(Integer.valueOf(goal.split(" ")[0]));
     objects.add(Integer.valueOf(goal.split(" ")[1]));
   }
-  public void update(float x, float y){
-  
+  public void update(){
+    for(int i = 0; i<numObstacles; i++){
+      rect(objects.get(4*i),objects.get(4*i+1),objects.get(4*i+2),objects.get(4*i+3));
+    }
   }
   
 }
