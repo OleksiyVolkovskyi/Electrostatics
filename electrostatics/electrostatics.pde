@@ -83,7 +83,7 @@ void drawLvlSelect(){
   }
 }
 
-void drawMainGame(){
+void drawMainGame() throws Exception{
   if (settings[1].equals("true")){
     placing = false;
     testCharges = new ArrayList<testCharge>();
@@ -148,8 +148,8 @@ void drawMainGame(){
   
   float x = testCharges.get(0).location.x;
   float y = testCharges.get(0).location.y;
-  for(int i = 0; i<numObstacles; i++){
-    if (x>=objects.get(4*i)&&y>=objects.get(4*i+1)&&x<=objects.get(4*i+2)&&y<=objects.get(4*i+3)){
+  for(int i = 0; i<level.numObstacles; i++){
+    if (x>=level.objects.get(4*i)&&y>=level.objects.get(4*i+1)&&x<=level.objects.get(4*i+2)&&y<=level.objects.get(4*i+3)){
         deathCount++;
     }
   }
@@ -160,7 +160,7 @@ void drawInstruction(){
 }
 
 
-void draw() {  // this is run repeatedly.
+void draw(){  // this is run repeatedly.
   if (settings[0].equals("intro")){
     drawIntro();
   }
