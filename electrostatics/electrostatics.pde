@@ -6,6 +6,9 @@ boolean paused = false;
 PVector oldPos;
 Level level;
 int deathCount;
+PVector initialPos;
+PVector initialDir;
+boolean win = false;
 
 String[] settings = new String[3];
 
@@ -85,6 +88,7 @@ void drawLvlSelect(){
 
 void drawMainGame() throws Exception{
   if (settings[1].equals("true")){
+    win = false;
     placing = false;
     testCharges = new ArrayList<testCharge>();
     sourceCharges = new ArrayList<sourceCharge>();
@@ -99,10 +103,19 @@ void drawMainGame() throws Exception{
     settings[1] = "false";
     level = new Level(settings[2]);
     level.load();
+    initialPos = new PVector(level.objects.get(level.objects.size()-4), level.objects.get(level.objects.size()-3));
+    initialDir = new PVector(level.objects.get(level.objects.size()-2), level.objects.get(level.objects.size()-1));
   }
   if (paused){
     return;  
   }
+  if (win){
+    fill(30,200,30);
+    textAlign(CENTER, CENTER);
+    textSize(68);
+    text("Stage Completed", 160, 70, 680, 300);
+  }
+  else{
   background(0);
   if (placing){
     drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10, 1);
@@ -141,14 +154,24 @@ void drawMainGame() throws Exception{
         q.update();
   for (testCharge t : testCharges)
         t.update();
+  }
   for (Button b: buttons){
       b.update();
   }
   level.update();
-  
+  //Check Goal
   float x = testCharges.get(0).location.x;
   float y = testCharges.get(0).location.y;
-  for(int i = 0; i<level.numObstacles; i++){
+  if (!win&&x>=level.objects.get(level.objects.size()-8)
+  &&y>=level.objects.get(level.objects.size()-7)
+  &&x<=level.objects.get(level.objects.size()-6)
+  &&y<=level.objects.get(level.objects.size()-5)){
+        buttons.add(new Button(new float[] {350,400,650,490}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Next Level", 32, 
+            new LvlSelect(settings, settings[2]+1)));
+  }
+  //Check Collision
+  
+  for(int i = 0; !win&&i<level.numObstacles; i++){
     if (x>=level.objects.get(4*i)&&y>=level.objects.get(4*i+1)&&x<=level.objects.get(4*i+2)&&y<=level.objects.get(4*i+3)){
         deathCount++;
     }
