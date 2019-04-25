@@ -1,3 +1,13 @@
+/*
+To Do List:
+fix throw error bug
+finish stage loading
+create placing stage and test stage
+    placing - only placing test charges
+    test - no controls
+Game lost method
+*/
+
 ArrayList<testCharge> testCharges;
 ArrayList<sourceCharge> sourceCharges;
 ArrayList<electricField> electricFields;
