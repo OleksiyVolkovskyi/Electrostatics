@@ -6,5 +6,6 @@ public class MainGame implements Method{
   public void activate(){
     settings[0] = "main";
     settings[1] = "true";
+    settings[2] = "1";
   }
 }

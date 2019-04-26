@@ -96,7 +96,7 @@ void drawLvlSelect(){
   }
 }
 
-void drawMainGame() throws Exception{
+void drawMainGame(){
   if (settings[1].equals("true")){
     win = false;
     placing = false;
@@ -115,6 +115,7 @@ void drawMainGame() throws Exception{
     level.load();
     initialPos = new PVector(level.objects.get(level.objects.size()-4), level.objects.get(level.objects.size()-3));
     initialDir = new PVector(level.objects.get(level.objects.size()-2), level.objects.get(level.objects.size()-1));
+    testCharges.add(new testCharge(initialPos.x, initialPos.y, 15, 5, initialDir));
   }
   if (paused){
     return;  
@@ -122,11 +123,12 @@ void drawMainGame() throws Exception{
   if (win){
     fill(30,200,30);
     textAlign(CENTER, CENTER);
-    textSize(68);
+    textSize(90);
     text("Stage Completed", 160, 70, 680, 300);
   }
   else{
   background(0);
+  level.update();
   if (placing){
     drawArrow(oldPos.x, oldPos.y, mouseX, mouseY, 10, 1);
   }
@@ -160,6 +162,7 @@ void drawMainGame() throws Exception{
   //Update Everything
   for (electricField e : electricFields)
         e.update();
+  level.update();
   for (sourceCharge q : sourceCharges)
         q.update();
   for (testCharge t : testCharges)
@@ -168,7 +171,7 @@ void drawMainGame() throws Exception{
   for (Button b: buttons){
       b.update();
   }
-  level.update();
+  
   //Check Goal
   float x = testCharges.get(0).location.x;
   float y = testCharges.get(0).location.y;
@@ -176,8 +179,9 @@ void drawMainGame() throws Exception{
   &&y>=level.objects.get(level.objects.size()-7)
   &&x<=level.objects.get(level.objects.size()-6)
   &&y<=level.objects.get(level.objects.size()-5)){
-        buttons.add(new Button(new float[] {350,400,650,490}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Next Level", 32, 
-            new LvlSelect(settings, settings[2]+1)));
+        buttons.add(new Button(new float[] {350,400,650,490},new int[] {100,100,100,100}, new int[] {200,200,200,200}, "Next Level", 32, 
+            new LvlSelect(settings, Integer.valueOf(settings[2])+1)));
+        win = true;
   }
   //Check Collision
   

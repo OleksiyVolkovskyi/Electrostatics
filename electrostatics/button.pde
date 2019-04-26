@@ -23,6 +23,7 @@ class Button{
     }
     
     private void drawButton(){
+      rectMode(CORNER);
       if (inBound()){
         stroke(0);
         fill(activeColor[0],activeColor[1],activeColor[2],activeColor[3]);

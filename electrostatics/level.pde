@@ -30,14 +30,20 @@ public class Level{
       String initalVector = input.readLine();
       objects.add(Integer.valueOf(initalVector.split(" ")[0]));
       objects.add(Integer.valueOf(initalVector.split(" ")[1]));
-     } catch{
+     } catch(IOException e){
        print("lol");
      }
+     println(objects);
   }
   public void update(){
+    rectMode(CORNERS);
     for(int i = 0; i<numObstacles; i++){
+      fill(200,200,200);
       rect(objects.get(4*i),objects.get(4*i+1),objects.get(4*i+2),objects.get(4*i+3));
     }
+    println();
+    fill(10,200,10);
+    rect(objects.get(objects.size()-8),objects.get(objects.size()-7),objects.get(objects.size()-6),objects.get(objects.size()-5));
   }
   
 }
