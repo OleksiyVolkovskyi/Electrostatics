@@ -18,6 +18,7 @@ PVector initialPos;
 PVector initialDir;
 boolean win = false;
 boolean loss = false;
+boolean showDeathCount = true;
 
 String[] settings = new String[3];
 
@@ -97,6 +98,7 @@ void drawLvlSelect(){
 
 void drawMainGame(){
   if (settings[1].equals("true")){
+    showDeathCount = true;
     loss = false;
     win = false;
     placing = false;
@@ -202,10 +204,14 @@ void drawMainGame(){
   }
   
   //Display Death Count
-  fill(255,255,255);
-  textAlign(LEFT, CENTER);
-  textSize(25);
-  text("Death Count: " + deathCount, 0,-10,250,60);
+  if(showDeathCount){
+    fill(255,255,255);
+    textAlign(LEFT, CENTER);
+    textSize(25);
+    text("Death Count: " + deathCount, 0,-10,250,60);
+  }
+  if(loss||win)
+    showDeathCount = false;
   
   
 }
