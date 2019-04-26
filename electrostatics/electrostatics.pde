@@ -246,7 +246,7 @@ void keyPressed(){
   if (settings[0].equals("main")){
     if (key == ' '){
        if(win||loss||launched)
-           drawMainGame();
+           settings[1]="true";
        else
            launched = true;
     }
