@@ -1,7 +1,5 @@
 /*
 To Do List:
-fix throw error bug
-finish stage loading
 create placing stage and test stage
     placing - only placing test charges
     test - no controls
@@ -15,10 +13,11 @@ boolean placing = false;
 boolean paused = false;
 PVector oldPos;
 Level level;
-int deathCount;
+int deathCount = 0;
 PVector initialPos;
 PVector initialDir;
 boolean win = false;
+boolean loss = false;
 
 String[] settings = new String[3];
 
@@ -98,6 +97,7 @@ void drawLvlSelect(){
 
 void drawMainGame(){
   if (settings[1].equals("true")){
+    loss = false;
     win = false;
     placing = false;
     testCharges = new ArrayList<testCharge>();
@@ -125,6 +125,12 @@ void drawMainGame(){
     textAlign(CENTER, CENTER);
     textSize(90);
     text("Stage Completed", 160, 70, 680, 300);
+  }
+  else if(loss){
+    fill(200,39,30);
+    textAlign(CENTER, CENTER);
+    textSize(90);
+    text("Crashed", 160, 70, 680, 300);
   }
   else{
   background(0);
@@ -171,11 +177,12 @@ void drawMainGame(){
   for (Button b: buttons){
       b.update();
   }
+
   
   //Check Goal
   float x = testCharges.get(0).location.x;
   float y = testCharges.get(0).location.y;
-  if (!win&&x>=level.objects.get(level.objects.size()-8)
+  if (!win&&!loss&&x>=level.objects.get(level.objects.size()-8)
   &&y>=level.objects.get(level.objects.size()-7)
   &&x<=level.objects.get(level.objects.size()-6)
   &&y<=level.objects.get(level.objects.size()-5)){
@@ -183,13 +190,24 @@ void drawMainGame(){
             new LvlSelect(settings, Integer.valueOf(settings[2])+1)));
         win = true;
   }
-  //Check Collision
   
-  for(int i = 0; !win&&i<level.numObstacles; i++){
+  //Check Collision
+  for(int i = 0; !win&&!loss&&i<level.numObstacles; i++){
     if (x>=level.objects.get(4*i)&&y>=level.objects.get(4*i+1)&&x<=level.objects.get(4*i+2)&&y<=level.objects.get(4*i+3)){
+        loss = true;
         deathCount++;
+        buttons.add(new Button(new float[] {350,400,650,490},new int[] {100,100,100,100}, new int[] {200,200,200,200}, "Retry", 32, 
+            new LvlSelect(settings, Integer.valueOf(settings[2]))));
     }
   }
+  
+  //Display Death Count
+  fill(255,255,255);
+  textAlign(LEFT, CENTER);
+  textSize(25);
+  text("Death Count: " + deathCount, 0,-10,250,60);
+  
+  
 }
 
 void drawInstruction(){
