@@ -250,7 +250,7 @@ void keyPressed(){
        else
            launched = true;
     }
-    if (key == 's'){
+    if (key == 's' && !launched){
         sourceCharges.add(new sourceCharge(mouseX, mouseY,15,-50));
     }
   }
