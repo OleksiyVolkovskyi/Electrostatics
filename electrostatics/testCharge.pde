@@ -11,11 +11,14 @@ class testCharge{
     r = ir;
   }
   void update(){
-    location.add(velocity);
     noStroke();
     fill(0,0,200);
     ellipse(location.x, location.y , r, r);
     drawArrow(location.x, location.y, location.x+velocity.x*30, location.y+velocity.y*30, 5, 1);
+  }
+  
+  void move(){
+    location.add(velocity);
   }
 
   void force(sourceCharge c){
