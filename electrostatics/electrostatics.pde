@@ -245,7 +245,7 @@ void draw(){  // this is run repeatedly.
 void keyPressed(){
   if (settings[0].equals("main")){
     if (key == ' '){
-       if(win||loss)
+       if(win||loss||launched)
            drawMainGame();
        else
            launched = true;
