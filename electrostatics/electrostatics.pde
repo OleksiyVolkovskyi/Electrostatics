@@ -3,7 +3,8 @@ To Do List:
 create placing stage and test stage
     placing - only placing test charges
     test - no controls
-Game lost method
+create levels
+create instructions
 */
 
 ArrayList<testCharge> testCharges;
@@ -19,6 +20,7 @@ PVector initialDir;
 boolean win = false;
 boolean loss = false;
 boolean showDeathCount = true;
+boolean launched;
 
 String[] settings = new String[3];
 
@@ -173,8 +175,11 @@ void drawMainGame(){
   level.update();
   for (sourceCharge q : sourceCharges)
         q.update();
-  for (testCharge t : testCharges)
+  for (testCharge t : testCharges){
+        if(launched)
+            t.move();
         t.update();
+  }
   }
   for (Button b: buttons){
       b.update();
@@ -240,13 +245,10 @@ void draw(){  // this is run repeatedly.
 void keyPressed(){
   if (settings[0].equals("main")){
     if (key == ' '){
-        placing = !placing;
-        if (placing){
-          oldPos = new PVector(mouseX,mouseY);
-        }
-        else{
-          testCharges.add(new testCharge(mouseX, mouseY,15,5, new PVector(  -0.01*(oldPos.x-mouseX), -0.01*(oldPos.y-mouseY)  )));
-        } 
+       if(win||loss)
+           drawMainGame();
+       else
+           launched = true;
     }
     if (key == 's'){
         sourceCharges.add(new sourceCharge(mouseX, mouseY,15,-50));
