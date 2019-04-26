@@ -7,6 +7,7 @@ create levels
 create instructions
 */
 
+//Global Variables :)
 ArrayList<testCharge> testCharges;
 ArrayList<sourceCharge> sourceCharges;
 ArrayList<electricField> electricFields;
@@ -21,9 +22,7 @@ boolean win = false;
 boolean loss = false;
 boolean showDeathCount = true;
 boolean launched;
-
 String[] settings = new String[3];
-
 ArrayList<Button> buttons = new ArrayList<Button>();
 
 Method circle = new Circle();
@@ -31,7 +30,7 @@ Method startMainGame = new MainGame(settings);
 Method backToIntro = new BackToIntro(settings);
 Method lvlSelectScreen = new LvlSelectScreen(settings);
 
-void setup() {  // this is run once.   
+void setup() {  // this is run once at the start  
     // set the background color
     background(0);
     // canvas size (Integers only, please.)
@@ -53,7 +52,7 @@ void setup() {  // this is run once.
     //buttons.add(new Button(new float[] {400,450,500,500}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Streaks", 24, streaks));
 }
 
-void drawIntro(){
+void drawIntro(){ //Intro Screen
   if (settings[1].equals("true")){
     background(0);
     fill(255,255,255);
@@ -71,7 +70,7 @@ void drawIntro(){
   }
 }
 
-void drawLvlSelect(){
+void drawLvlSelect(){ // Level Selection Screen
    if (settings[1].equals("true")){
     background(0);
     fill(255,255,255);
@@ -98,7 +97,7 @@ void drawLvlSelect(){
   }
 }
 
-void drawMainGame(){
+void drawMainGame(){ // Main Game Screen
   if (settings[1].equals("true")){
     showDeathCount = true;
     loss = false;
@@ -221,12 +220,12 @@ void drawMainGame(){
   
 }
 
-void drawInstruction(){
+void drawInstruction(){ //Instruction Screen
 
 }
 
 
-void draw(){  // this is run repeatedly.
+void draw(){  // this is run repeatedly (one frame)
   if (settings[0].equals("intro")){
     drawIntro();
   }
@@ -242,7 +241,7 @@ void draw(){  // this is run repeatedly.
   
 }
 
-void keyPressed(){
+void keyPressed(){ // Event of a Key Press
   if (settings[0].equals("main")){
     if (key == ' '){
        if(win||loss||launched)
