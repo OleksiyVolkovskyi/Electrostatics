@@ -143,7 +143,7 @@ void drawMainGame(){ // Main Game Screen
   }
   
   //Test charges with each other
-  for (int i = 0; i<testCharges.size(); i++){
+  for (int i = 0; launched&&i<testCharges.size(); i++){
     for (int j = 0; j<testCharges.size(); j++){
       if (i!=j)
         testCharges.get(i).force(testCharges.get(j));
@@ -151,7 +151,7 @@ void drawMainGame(){ // Main Game Screen
   }
   
   //Test with source
-  for (int i = 0; i<testCharges.size(); i++){
+  for (int i = 0; launched&&i<testCharges.size(); i++){
     for (sourceCharge q : sourceCharges)
          testCharges.get(i).force(q);
   }
@@ -244,8 +244,10 @@ void draw(){  // this is run repeatedly (one frame)
 void keyPressed(){ // Event of a Key Press
   if (settings[0].equals("main")){
     if (key == ' '){
-       if(win||loss||launched)
+       if(win||loss||launched){
            settings[1]="true";
+           launched = false;
+       }
        else
            launched = true;
     }
