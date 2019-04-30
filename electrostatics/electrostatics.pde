@@ -1,8 +1,7 @@
 /*
 To Do List:
 create placing stage and test stage
-    placing - only placing test charges
-    test - no controls
+    restart keeps stage details
 create levels
 create instructions
 */
