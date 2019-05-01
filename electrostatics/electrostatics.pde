@@ -1,7 +1,5 @@
 /*
 To Do List:
-create placing stage and test stage
-    restart keeps stage details
 create levels
 create instructions
 */
@@ -112,16 +110,22 @@ void drawMainGame(){ // Main Game Screen
             electricFields.add(new electricField(i,j,15,-50));
             }
         }
-        buttons = new ArrayList<Button>();
-        buttons.add(new Button(new float[] {870,695,980,740}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Back", 32, backToIntro));
+
         level = new Level(settings[2]);
         level.load();
+        initialPos = new PVector(level.objects.get(level.objects.size()-4), level.objects.get(level.objects.size()-3));
+        initialDir = new PVector(level.objects.get(level.objects.size()-2), level.objects.get(level.objects.size()-1));
+        testCharges.add(new testCharge(initialPos.x, initialPos.y, 15, 5, initialDir));
     }
+    buttons = new ArrayList<Button>();
+    buttons.add(new Button(new float[] {870,695,980,740}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Back", 32, backToIntro));
     settings[1] = "false";
+    testCharges.get(0).location.x = initialPos.x;
+    testCharges.get(0).location.y = initialPos.y;
+    testCharges.get(0).velocity.x = initialDir.x;
+    testCharges.get(0).velocity.y = initialDir.y;
+    print("lol");
     
-    initialPos = new PVector(level.objects.get(level.objects.size()-4), level.objects.get(level.objects.size()-3));
-    initialDir = new PVector(level.objects.get(level.objects.size()-2), level.objects.get(level.objects.size()-1));
-    testCharges.add(new testCharge(initialPos.x, initialPos.y, 15, 5, initialDir));
   }
   if (paused){
     return;  
@@ -205,6 +209,7 @@ void drawMainGame(){ // Main Game Screen
     if (x>=level.objects.get(4*i)&&y>=level.objects.get(4*i+1)&&x<=level.objects.get(4*i+2)&&y<=level.objects.get(4*i+3)){
         loss = true;
         deathCount++;
+        launched = false;
         buttons.add(new Button(new float[] {350,400,650,490},new int[] {100,100,100,100}, new int[] {200,200,200,200}, "Retry", 32, 
             new LvlSelect(settings, Integer.valueOf(settings[2]))));
     }

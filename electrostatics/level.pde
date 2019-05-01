@@ -41,7 +41,6 @@ public class Level{
       fill(200,200,200);
       rect(objects.get(4*i),objects.get(4*i+1),objects.get(4*i+2),objects.get(4*i+3));
     }
-    println();
     fill(10,200,10);
     rect(objects.get(objects.size()-8),objects.get(objects.size()-7),objects.get(objects.size()-6),objects.get(objects.size()-5));
   }

@@ -9,5 +9,6 @@ public class LvlSelect implements Method{
     settings[0] = "main";
     settings[1] = "true";
     settings[2] = Integer.toString(level);
+    settings[3] = "true";
   }
 }

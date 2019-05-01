@@ -7,7 +7,7 @@ class testCharge{
   testCharge (float ix, float iy, int ir, float iq, PVector iv){
     q = iq;
     location = new PVector(ix,iy);
-    velocity = iv;
+    velocity = iv.copy();
     r = ir;
   }
   void update(){
