@@ -21,7 +21,7 @@ boolean win = false;
 boolean loss = false;
 boolean showDeathCount = true;
 boolean launched;
-String[] settings = new String[3];
+String[] settings = new String[4];
 ArrayList<Button> buttons = new ArrayList<Button>();
 
 Method circle = new Circle();
@@ -102,19 +102,23 @@ void drawMainGame(){ // Main Game Screen
     loss = false;
     win = false;
     placing = false;
-    testCharges = new ArrayList<testCharge>();
-    sourceCharges = new ArrayList<sourceCharge>();
-    electricFields = new ArrayList<electricField>();
-    for (int i = 50; i<1000; i += 50){
-        for (int j = 50; j< 1000; j+=50){
+    if(settings[3].equals("true")){
+        settings[3] = "false";
+        testCharges = new ArrayList<testCharge>();
+        sourceCharges = new ArrayList<sourceCharge>();
+        electricFields = new ArrayList<electricField>();
+        for (int i = 50; i<1000; i += 50){
+            for (int j = 50; j< 1000; j+=50){
             electricFields.add(new electricField(i,j,15,-50));
+            }
         }
+        buttons = new ArrayList<Button>();
+        buttons.add(new Button(new float[] {870,695,980,740}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Back", 32, backToIntro));
+        level = new Level(settings[2]);
+        level.load();
     }
-    buttons = new ArrayList<Button>();
-    buttons.add(new Button(new float[] {870,695,980,740}, new int[] {100,100,100,100},new int[] {200,200,200,200}, "Back", 32, backToIntro));
     settings[1] = "false";
-    level = new Level(settings[2]);
-    level.load();
+    
     initialPos = new PVector(level.objects.get(level.objects.size()-4), level.objects.get(level.objects.size()-3));
     initialDir = new PVector(level.objects.get(level.objects.size()-2), level.objects.get(level.objects.size()-1));
     testCharges.add(new testCharge(initialPos.x, initialPos.y, 15, 5, initialDir));
