@@ -1,6 +1,6 @@
 1
-100 600 800 800 Obstacle
-425 425 475 475 Goal
-300 100 Start
-0 1 Vector
+900 00 950 800 Obstacle
+625 425 675 475 Goal
+100 300 Start
+1 0 Vector
 

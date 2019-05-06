@@ -201,6 +201,8 @@ void drawMainGame(){ // Main Game Screen
   &&y<=level.objects.get(level.objects.size()-5)){
         buttons.add(new Button(new float[] {350,400,650,490},new int[] {100,100,100,100}, new int[] {200,200,200,200}, "Next Level", 32, 
             new LvlSelect(settings, Integer.valueOf(settings[2])+1)));
+        placing = true;
+        launched = false;
         win = true;
   }
   
